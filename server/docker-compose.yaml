@@ -1,0 +1,17 @@
+version: '3.7'
+networks:
+  parking:
+
+services:
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=parking_database
+      - POSTGRES_USER=parking_root
+      - POSTGRES_PASSWORD=Test12345!
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+    networks:
+      - parking
