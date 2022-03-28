@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\BayController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,22 +19,4 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/bays', function () {
-    return response()->json([
-      [
-        'id' => 1,
-        'location' => 'location 1',
-        'available' => true,
-      ], 
-      [
-        'id' => 2,
-        'location' => 'location 2',
-        'available' => true,
-      ], 
-      [
-        'id' => 3,
-        'location' => 'location 3',
-        'available' => true,
-      ], 
-    ]);
-});
+Route::get('/bays', [BayController::class, 'get']);
