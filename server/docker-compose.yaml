@@ -59,3 +59,14 @@ services:
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
       - parking
+
+
+  composer: 
+    image: composer:2.1.6
+    container_name: composer
+    volumes: 
+      - ./src:/var/www/html
+    working_dir: /var/www/html
+    command: /bin/sh -c "sleep 10 && composer install"
+    networks: 
+      - parking
