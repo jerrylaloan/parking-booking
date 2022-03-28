@@ -19,5 +19,21 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/bays', function () {
-    return 'Hello';
+    return response()->json([
+      [
+        'id' => 1,
+        'location' => 'location 1',
+        'available' => true,
+      ], 
+      [
+        'id' => 2,
+        'location' => 'location 2',
+        'available' => true,
+      ], 
+      [
+        'id' => 3,
+        'location' => 'location 3',
+        'available' => true,
+      ], 
+    ]);
 });
