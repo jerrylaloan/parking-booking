@@ -7,6 +7,11 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Mockery\MockInterface;
 use App\Services\BayService;
+use App\Models\Bay;
+use Illuminate\Support\Facades\Log;
+
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertEquals;
 
 class BaysTest extends TestCase
 {
@@ -16,25 +21,12 @@ class BaysTest extends TestCase
 	{
 		parent::setUp();
 
-		$mock = $this->mock(BayService::class, function (MockInterface $mock) {
-    		$mock->shouldReceive('getAll')->with('all')->andReturn([
-				[
-            		'id' => 1,
-            		'location' => 'location 1',
-            		'available' => true
-				], 
-				[
-            		'id' => 2,
-            		'location' => 'location 2',
-            		'available' => true
-				], 
-				[
-            		'id' => 3,
-            		'location' => 'location 3',
-            		'available' => true
-				]
-			]);
-		});
+		Bay::truncate();
+		Bay::insert([
+	   		['name' => 'bay 1', 'location' => 'location 1', 'available' => true],
+	   		['name' => 'bay 2', 'location' => 'location 2', 'available' => true],
+	   		['name' => 'bay 3', 'location' => 'location 3', 'available' => true],
+		]);
 	}
 
  	public function test_should_return_200_response_for_successful_api_invocation()
@@ -42,28 +34,40 @@ class BaysTest extends TestCase
  	    $response = $this->get('/api/bays');
 
  	    $response->assertStatus(200);
+		assertEquals(3, count($response->json()));
  	}
 
     public function test_should_return_3_bays_in_the_response_data()
     {
         $response = $this->get('/api/bays');
 
-        $response->assertJson([
+        $response->assertSimilarJson([
           [
             'id' => 1,
+			'name' => 'bay 1',
             'location' => 'location 1',
             'available' => true
           ], 
           [
             'id' => 2,
+			'name' => 'bay 2', 
             'location' => 'location 2',
             'available' => true
           ], 
           [
             'id' => 3,
+			'name' => 'bay 3', 
             'location' => 'location 3',
             'available' => true
           ], 
         ]);
+    }
+
+    public function test_should_return_0_elements_for_request_with_not_available_query_string()
+    {
+        $response = $this->get('/api/bays?status=not_available');
+
+		assertEquals(0, count($response->json()));
+        $response->assertSimilarJson([]);
     }
 }

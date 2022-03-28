@@ -15,8 +15,9 @@ class BayController extends Controller
         $this->bayService = $bayService;
     }
 
-    public function get() {
-        $result = $this->bayService->getAll('all');
+    public function get(Request $request) {
+        $status = $request->query('status', 'all');
+        $result = $this->bayService->getAll($status);
 
         return response()->json($result);
     }
