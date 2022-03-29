@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BayController;
+use App\Http\Controllers\Api\BookingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +20,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+// bays resource
 Route::get('/bays', [BayController::class, 'get']);
+
+// booking resource
+Route::get('/booking/{code}', [BookingController::class, 'getByCode']);
+
