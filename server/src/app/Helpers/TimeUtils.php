@@ -6,6 +6,8 @@ class TimeUtils
 {
     public static function getHourDiffs($date1, $date2) 
     {
-        return 2;
+        $seconds = strtotime($date2->format('Y-m-d H:i:s')) - strtotime($date1->format('Y-m-d H:i:s'));
+        $hours = $seconds / 60 / 60;
+        return (int)ceil(abs($hours));
     }
 }
