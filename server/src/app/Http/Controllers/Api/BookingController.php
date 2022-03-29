@@ -16,14 +16,9 @@ class BookingController extends Controller
     }
 
     public function getByCode($code) {
-        echo "booking code : $code";
-
-        // TODO: 
-        // fetch from booking service
-        // calculate price based on hourly pricing model
         $booking = $this->bookingService->getActiveBooking($code);
 
-        if ($code != 'BOOK1') {
+        if (!$booking) {
             return response()->json([
                 "message" => "Record not found."
             ], 404);

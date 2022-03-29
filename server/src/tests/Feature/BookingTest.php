@@ -2,12 +2,48 @@
 
 namespace Tests\Feature;
 
+use App\Models\Bay;
+use App\Models\Booking;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class BookingTest extends TestCase
 {
+    use RefreshDatabase;
+
+	public function setUp(): void
+	{
+		parent::setUp();
+
+		Bay::truncate();
+
+        $bay1 = Bay::create([
+	   		'name' => 'bay 1', 
+            'location' => 'location 1', 
+            'available' => false,
+        ]);
+
+        $bay2 = Bay::create([
+	   		'name' => 'bay 2', 
+            'location' => 'location 2', 
+            'available' => false,
+        ]);
+
+        $bay3 = Bay::create([
+	   		'name' => 'bay 3', 
+            'location' => 'location 3', 
+            'available' => true,
+        ]);
+ 
+
+		Booking::truncate();
+		Booking::insert([
+	   		['bay_id' => $bay1->id, 'renter' => 'Renter One', 'code' => 'BOOK1', 'paid' => false],
+	   		['bay_id' => $bay2->id, 'renter' => 'Renter TwO', 'code' => 'BOOK2', 'paid' => false],
+		]);
+	}
+
     public function test_should_return_not_found_response_for_unrecognizable_booking_code()
     {
         $response = $this->get('/api/booking/BOOK1_NOTFOUND');
@@ -25,7 +61,7 @@ class BookingTest extends TestCase
         $response->assertStatus(200);
         $response->assertSimilarJson([
             'id' => 1,
-            'renter' => 'Renter Name',
+            'renter' => 'Renter One',
             'code' => 'BOOK1',
             'paid' => false,
             'hours' => 2, 
