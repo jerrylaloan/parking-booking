@@ -8,6 +8,6 @@ class TimeUtils
     {
         $seconds = strtotime($date2->format('Y-m-d H:i:s')) - strtotime($date1->format('Y-m-d H:i:s'));
         $hours = $seconds / 60 / 60;
-        return (int)ceil(abs($hours));
+        return abs(round($hours, 2)); // return value is float
     }
 }
