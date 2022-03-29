@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Bay;
 use App\Models\Booking;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -15,6 +16,8 @@ class BookingTest extends TestCase
 	public function setUp(): void
 	{
 		parent::setUp();
+
+        Carbon::setTestNow('2022-03-29 14:00:00');
 
 		Bay::truncate();
 
@@ -39,10 +42,28 @@ class BookingTest extends TestCase
 
 		Booking::truncate();
 		Booking::insert([
-	   		['bay_id' => $bay1->id, 'renter' => 'Renter One', 'code' => 'BOOK1', 'paid' => false],
-	   		['bay_id' => $bay2->id, 'renter' => 'Renter TwO', 'code' => 'BOOK2', 'paid' => false],
+	   		[
+                'bay_id' => $bay1->id, 
+                'renter' => 'Renter One', 
+                'code' => 'BOOK1', 
+                'paid' => false, 
+                'created_at' => Carbon::create('2022-03-29 12:00:00'),
+            ],
+	   		[
+                'bay_id' => $bay2->id, 
+                'renter' => 'Renter Two', 
+                'code' => 'BOOK2', 
+                'paid' => false, 
+                'created_at' => Carbon::create('2022-03-29 13:00:00'),
+            ],
 		]);
 	}
+
+	public function tearDown(): void 
+    {
+		parent::tearDown();
+        Carbon::setTestNow();                                  
+    }
 
     public function test_should_return_not_found_response_for_unrecognizable_booking_code()
     {

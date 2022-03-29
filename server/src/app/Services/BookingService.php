@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Helpers\PriceUtils;
 use App\Helpers\TimeUtils;
 use App\Models\Booking;
+use Carbon\Carbon;
 
 class BookingService {
     public function getActiveBooking($code) {
@@ -21,8 +22,10 @@ class BookingService {
             'renter' => $booking->renter,
             'code' => $booking->code,
             'paid' => $booking->paid,
-            'hours' => TimeUtils::getHourDiffs('date1', 'date2'), 
-            'price' => PriceUtils::getPrice(TimeUtils::getHourDiffs('date1', 'date2'))
+            'hours' => TimeUtils::getHourDiffs(Carbon::create($booking->created_at), Carbon::now()),
+            'price' => PriceUtils::getPrice(
+                TimeUtils::getHourDiffs(Carbon::create($booking->created_at), Carbon::now()),
+            )
         ];
     }
 }
