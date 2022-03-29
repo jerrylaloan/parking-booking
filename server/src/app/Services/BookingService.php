@@ -28,4 +28,21 @@ class BookingService {
             )
         ];
     }
+
+    public function createNewBooking($payload){
+        $newBooking = Booking::create([
+	   		'bay_id' => $payload->bay_id, 
+            'renter' => $payload->renter, 
+            'code' => 'BOOK3',
+        ]);
+
+        $booking = Booking::find($newBooking->id, [
+                                    'id', 
+                                    'bay_id', 
+                                    'renter', 
+                                    'code'
+                                ]);
+
+        return $booking;
+    }
 }

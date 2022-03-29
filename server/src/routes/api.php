@@ -25,4 +25,5 @@ Route::get('/bays', [BayController::class, 'get']);
 
 // booking resource
 Route::get('/booking/{code}', [BookingController::class, 'getByCode']);
+Route::post('/booking', [BookingController::class, 'create']);
 

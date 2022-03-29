@@ -89,4 +89,22 @@ class BookingTest extends TestCase
             'price' => 20
         ]);
     }
+
+    public function test_should_successfully_create_new_booking()
+    {
+        $bay = Bay::where('available', true)->first();
+
+        $response = $this->postJson('/api/booking', [
+            'renter' => 'John Doe', 
+            'bay_id' => $bay->id, 
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'id' => 3, 
+            'renter' => 'John Doe',
+            'code' => 'BOOK3',
+            'bay_id' => 3
+        ]);
+    }
 }
