@@ -9,6 +9,12 @@ class Bay extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'location',
+        'available',
+    ];
+
     protected $hidden = [
         'created_at',
         'updated_at',
