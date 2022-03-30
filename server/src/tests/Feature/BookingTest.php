@@ -111,4 +111,42 @@ class BookingTest extends TestCase
         $bayUpdated = Bay::find($bay->id);
         $this->assertFalse($bayUpdated->available);
     }
+
+    public function test_should_auto_replace_to_available_bay_when_the_desired_bay_is_booked()
+    {
+        $bay = Bay::where('name', 'bay 1')->first();
+
+        $response = $this->postJson('/api/booking', [
+            'renter' => 'John Doe', 
+            'bay_id' => $bay->id, 
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'id' => 3, 
+            'renter' => 'John Doe',
+            'code' => 'BOOK3',
+            'bay_id' => 3
+        ]);
+    }
+
+    public function test_should_send_400_response_if_the_bay_is_fully_booked()
+    {
+        $bay = Bay::where('available', true)->first();
+
+        $this->postJson('/api/booking', [
+            'renter' => 'John Doe', 
+            'bay_id' => $bay->id, 
+        ]);
+
+        $response = $this->postJson('/api/booking', [
+            'renter' => 'John Doe', 
+            'bay_id' => $bay->id, 
+        ]);
+
+        $response->assertStatus(400);
+        $response->assertJson([
+            'message' => "Bays are fully booked.", 
+        ]);
+    }
 }
