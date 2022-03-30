@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\BayController;
 use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +28,6 @@ Route::get('/bays', [BayController::class, 'get']);
 Route::get('/booking/{code}', [BookingController::class, 'getByCode']);
 Route::post('/booking', [BookingController::class, 'create']);
 
+
+// payment resource
+Route::post('/payment', [PaymentController::class, 'pay']);
