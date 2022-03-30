@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Helpers\PriceUtils;
 use App\Helpers\TimeUtils;
+use App\Models\Bay;
 use App\Models\Booking;
 use Carbon\Carbon;
 
@@ -42,6 +43,9 @@ class BookingService {
                                     'renter', 
                                     'code'
                                 ]);
+
+        Bay::where('id', $payload->bay_id)
+            ->update(['available' => false]);
 
         return $booking;
     }

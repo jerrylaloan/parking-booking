@@ -106,5 +106,9 @@ class BookingTest extends TestCase
             'code' => 'BOOK3',
             'bay_id' => 3
         ]);
+
+
+        $bayUpdated = Bay::find($bay->id);
+        $this->assertFalse($bayUpdated->available);
     }
 }
