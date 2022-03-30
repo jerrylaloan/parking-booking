@@ -4,6 +4,13 @@ namespace App\Helpers;
 
 class PriceUtils 
 {
+    /**
+     * Calculate price based on duration of booking
+     * 
+     * @param  integer $hour - duration of booking hour
+     * 
+     * @return integer 
+     */
     public static function getPrice($hour = 0)
     {
         if (is_numeric($hour) && $hour >= 0 && $hour <= 1) {
