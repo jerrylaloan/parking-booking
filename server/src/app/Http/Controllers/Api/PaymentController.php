@@ -36,7 +36,6 @@ class PaymentController extends Controller
         try {
             $payment = $this->paymentService->pay($validated['bay_id'], $validated['code']);
         } catch (Throwable $e) {
-            dd($e->getMessage());
             return response()->json([
                 "message" => "Internal server error." 
             ], 500);
