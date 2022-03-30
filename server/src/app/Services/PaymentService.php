@@ -11,6 +11,14 @@ use Exception;
 use Illuminate\Support\Carbon;
 
 class PaymentService {
+    /**
+     * Process payment of a booking
+     * 
+     * @param  integer $bay_id - bay id
+     * @param  string $code - booking code
+     * 
+     * @return Transaction
+     */
     public function pay($bay_id, $code){
         $bay = Bay::find($bay_id);
         $bay->available = true;
