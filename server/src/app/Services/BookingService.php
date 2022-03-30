@@ -9,6 +9,19 @@ use App\Models\Booking;
 use Carbon\Carbon;
 
 class BookingService {
+    /**
+     * Get active booking record by code
+     * 
+     * @param  string $code - unique booking code 
+     * @return object [
+     *     'id' => (integer)
+     *     'renter' => (string) 
+     *     'code' => (string)
+     *     'paid' => (boolean) 
+     *     'hours' => (float)
+     *     'price' => (integer)
+     * ]
+     */
     public function getActiveBooking($code) {
         $booking = Booking::where([
                                 'code' => $code,
@@ -30,6 +43,16 @@ class BookingService {
         ];
     }
 
+    /**
+     * Create new booking record
+     * 
+     * @param object $payload - [
+     *     'bay_id' => (integer)
+     *     'renter' => (string) 
+     * ]
+     * 
+     * @return Booking
+     */
     public function createNewBooking($payload){
         $newBooking = Booking::create([
 	   		'bay_id' => $payload->bay_id, 
@@ -50,7 +73,13 @@ class BookingService {
         return $booking;
     }
 
-    private function generateRandomString($length = 25) {
+    /**
+     * Generate random string for booking code
+     * 
+     * @param  integer $length - expected length of the code
+     * @return string - random generated string for booking code. ex: ABC12
+     */
+    private function generateRandomString($length = 5) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -59,6 +88,4 @@ class BookingService {
         }
         return $randomString;
     }
-// //usage 
-// $myRandomString = generateRandomString(5);
 }
