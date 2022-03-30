@@ -100,13 +100,14 @@ class BookingTest extends TestCase
         ]);
 
         $response->assertStatus(200);
-        $response->assertJson([
+        $response->assertJsonFragment([
             'id' => 3, 
             'renter' => 'John Doe',
-            'code' => 'BOOK3',
             'bay_id' => 3
         ]);
 
+        $decoded = json_decode($response->content());
+        $this->assertIsString($decoded->code);
 
         $bayUpdated = Bay::find($bay->id);
         $this->assertFalse($bayUpdated->available);
@@ -122,12 +123,14 @@ class BookingTest extends TestCase
         ]);
 
         $response->assertStatus(200);
-        $response->assertJson([
+        $response->assertJsonFragment([
             'id' => 3, 
             'renter' => 'John Doe',
-            'code' => 'BOOK3',
             'bay_id' => 3
         ]);
+
+        $decoded = json_decode($response->content());
+        $this->assertIsString($decoded->code);
     }
 
     public function test_should_send_400_response_if_the_bay_is_fully_booked()

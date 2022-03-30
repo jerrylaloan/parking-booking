@@ -34,7 +34,7 @@ class BookingService {
         $newBooking = Booking::create([
 	   		'bay_id' => $payload->bay_id, 
             'renter' => $payload->renter, 
-            'code' => 'BOOK3',
+            'code' => strtoupper($this->generateRandomString(5)),
         ]);
 
         $booking = Booking::find($newBooking->id, [
@@ -49,4 +49,16 @@ class BookingService {
 
         return $booking;
     }
+
+    private function generateRandomString($length = 25) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+// //usage 
+// $myRandomString = generateRandomString(5);
 }
