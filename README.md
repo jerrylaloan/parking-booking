@@ -4,7 +4,7 @@
 make sure the development environment have **docker** & **docker-compose** installed. 
 
 
-## Initial setup
+## First time setup (notes: do this in /server directory)
 
 - navigate to `/server` directory
 
@@ -21,13 +21,36 @@ docker-compose up -d    # spawn container
 docker-compose logs -f    # show container logs
 ```
 
-- install required vendor packages 
+- run migration
 ```
-docker-compose run --rm -T composer install 
+docker-compose run --rm -T artisan migrate
 ```
+
+after running the setup above you can continue to run client apps.
 
 
 - (more) stop the service 
 ```
 docker-compose down
 ```
+
+
+
+## Running client apps (notes: do this in /client directory)
+
+- navigate to `/client` directory
+
+- install dependencies
+```
+yarn install
+```
+
+- start the app
+```
+yarn start
+```
+
+
+
+
+
