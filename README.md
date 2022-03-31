@@ -67,6 +67,28 @@ Array {
 }
 
 curl -XGET 'http://localhost:8080/api/bays' 
+
+
+[
+  {
+    "id": 2,
+    "name": "bay 2",
+    "location": "location 2",
+    "available": true
+  },
+  {
+    "id": 3,
+    "name": "bay 3",
+    "location": "location 3",
+    "available": true
+  },
+  {
+    "id": 1,
+    "name": "bay 1",
+    "location": "location 1",
+    "available": true
+  }
+]
 ```
 
 
