@@ -79,6 +79,7 @@ class BookingTest extends TestCase
     {
         $response = $this->get('/api/booking/BOOK1');
 
+        $bay1 = Bay::where('name', 'bay 1')->first();
         $response->assertStatus(200);
         $response->assertSimilarJson([
             'id' => 1,
@@ -86,7 +87,8 @@ class BookingTest extends TestCase
             'code' => 'BOOK1',
             'paid' => false,
             'hours' => 2, 
-            'price' => 20
+            'price' => 20, 
+            'bay_id' => $bay1->id
         ]);
     }
 

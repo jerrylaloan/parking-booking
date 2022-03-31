@@ -39,7 +39,8 @@ class BookingService {
             'hours' => TimeUtils::getHourDiffs(Carbon::create($booking->created_at), Carbon::now()),
             'price' => PriceUtils::getPrice(
                 TimeUtils::getHourDiffs(Carbon::create($booking->created_at), Carbon::now()),
-            )
+            ), 
+            'bay_id' => $booking->bay_id
         ];
     }
 
