@@ -53,4 +53,114 @@ yarn start
 
 
 
+## Available endpoints
+
+GET /api/bays - fetching list of bays
+
+```
+response object: 
+Array {
+  id: number, 
+  name: string,
+  location: string, 
+  available: boolean
+}
+
+curl -XGET 'http://localhost:8080/api/bays' 
+```
+
+
+
+POST /api/booking - create booking
+
+```
+request object: 
+{
+  bay_id: number,
+  renter: string
+}
+
+
+response object: 
+{
+  id: number, 
+  bay_id: number,
+  renter: string, 
+  code: string
+}
+
+curl -XPOST 'http://localhost:8080/api/booking' \
+  -H 'Content-Type: application/json' \
+  --data-raw '{"bay_id":"1","renter":"Example User"}' \
+  --compressed
+
+{
+  "id":1,
+  "bay_id":1,
+  "renter":"Example User",
+  "code":"OCRBM"
+}
+```
+
+GET /api/booking/:booking_code - find booking by code
+
+```
+response object: 
+{
+  id: number, 
+  bay_id: number,
+  renter: string, 
+  code: string
+}
+
+
+curl -XGET 'http://localhost:8080/api/booking/OCRBM'
+
+
+{
+  "id":1,
+  "renter":"Example User",
+  "code":"OCRBM",
+  "paid":false,
+  "hours":0.06,
+  "price":0,
+  "bay_id":1
+}
+```
+
+
+
+POST /api/payment - pay booking 
+
+```
+request object: 
+{
+  bay_id: number,
+  code: string
+}
+
+
+response object: 
+{
+  id: number, 
+  booking_id: number,
+  duration: float, 
+  amount: number
+}
+
+curl -XPOST 'http://localhost:8080/api/payment' \
+  -H 'Content-Type: application/json' \
+  --data-raw '{"bay_id":1,"code":"OCRBM"}' \
+  --compressed
+
+{
+  "id":1,
+  "booking_id":1,
+  "duration":0.1,
+  "amount":0
+}
+```
+
+
+
 
