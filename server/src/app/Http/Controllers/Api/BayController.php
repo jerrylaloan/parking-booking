@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bay;
 use App\Services\BayService;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,15 @@ class BayController extends Controller
     }
 
     public function get(Request $request) {
+
+        if(Bay::count() === 0) {
+		    Bay::insert([
+	      		['name' => 'bay 1', 'location' => 'location 1', 'available' => true],
+	      		['name' => 'bay 2', 'location' => 'location 2', 'available' => true],
+	      		['name' => 'bay 3', 'location' => 'location 3', 'available' => true],
+		    ]);
+        }
+
         $status = $request->query('status', 'all');
         $result = $this->bayService->getAll($status);
 
